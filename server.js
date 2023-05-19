@@ -196,7 +196,7 @@ app.get("/api/board/user_id/:content", (req, res) => {
 });
 
 app.delete("/api/board/:num", (req, res) => {
-  const sql = "DELETE FROM boards WHERE num=?";
+  const sql = "DELETE FROM BOARD WHERE num=?";
   const params = [req.params.num];
   connection.query(sql, params, (err, rows, fields) => {
     if (err) throw err;
@@ -431,12 +431,11 @@ app.post("/api/notice", (req, res) => {
 
 // Update 기능
 app.post("/api/notice/:NUM", (req, res) => {
-  const sql = "UPDATE NOTICE SET TITLE=?, CONTENT=?, REGDATE=? WHERE NUM=?";
+  const sql = "UPDATE NOTICE SET TITLE=?, CONTENT=? WHERE NUM=?";
   const NUM = req.params.NUM;
   const TITLE = req.body.TITLE;
   const CONTENT = req.body.CONTENT;
-  const REGDATE = req.body.REGDATE;
-  const params = [TITLE, CONTENT, REGDATE, NUM];
+  const params = [TITLE, CONTENT, NUM];
   connection.query(sql, params, (err, rows, fields) => {
     if (err) {
       console.log(err);
@@ -497,6 +496,12 @@ app.post("/api/product", uploads.single("image"), (req, res) => {
     res.send(rows);
     console.log(err);
   });
+});
+
+app.delete("/api/product/:num", (req, res) => {
+  const num = [req.params.num];
+  const sql = "DELETE FROM products WHERE num = ?";
+  connection.query(sql, num, (err, rows, fields) => res.send(rows));
 });
 //shop (예지)
 app.get("/api/selectProduct", (req, res) => {
@@ -688,6 +693,7 @@ app.post("/api/ticketImpo", (req, res) => {
   const ticketdate = req.body.ticketdate;
   const ticketTeam = req.body.ticketTeam;
   const ticketTime = req.body.ticketTime;
+  const schedule_id = req.body.schedule_id;
 
   const params = [
     user_id,
@@ -698,9 +704,10 @@ app.post("/api/ticketImpo", (req, res) => {
     ticketdate,
     ticketTeam,
     ticketTime,
+    schedule_id,
   ];
   console.log(params);
-  const sql = "INSERT INTO TICKET  VALUES (null,?, ?, ?, ?, ?, ?, ?, ?)"; // SQL 쿼리문 작성
+  const sql = "INSERT INTO TICKET  VALUES (null,?, ?, ?, ?, ?, ?, ?, ?,?)"; // SQL 쿼리문 작성
   connection.query(sql, params, (error, results, fields) => {
     if (error) {
       console.error(error); // 에러 출력
@@ -709,6 +716,17 @@ app.post("/api/ticketImpo", (req, res) => {
       // 에러가 없을 시
       res.status(200).send("Data successfully inserted into database"); // 200 성공 코드와 함께 성공 메시지 전송
     }
+  });
+});
+
+// myTicket
+app.get("/api/myTicketInfo/:user_id", (req, res) => {
+  const user_id = [req.params.user_id];
+  const sql =
+    "SELECT T.id as id, T.user_id as user_id, T.ticketHC as ticketHC, T.ticketname as ticketname, T.ticketprice asticketprice, T.ticketground as ticketground, S.schedule_date as ticketdate, T.ticketTeam as ticketTeam, S.schedule_time as ticketTime, T.schedule_id as schedule_id FROM TICKET T JOIN schedules S ON T.schedule_id = S.schedule_id WHERE user_id=?";
+
+  connection.query(sql, user_id, (err, rows, fields) => {
+    res.send(rows);
   });
 });
 // payresult
@@ -721,7 +739,8 @@ app.get("/api/succesTicketing/:id", (req, res) => {
   });
 });
 app.get("/api/ticketing/:id", (req, res) => {
-  const sql = "SELECT * FROM firefox.TICKET WHERE id=?";
+  const sql =
+    "SELECT T.id AS id, T.user_id AS user_id, T.ticketHC AS ticketHC, T.ticketname AS ticketname, T.ticketprice asticketprice, T.ticketground AS ticketground, S.schedule_date AS ticketdate, T.ticketTeam AS ticketTeam, S.schedule_time AS ticketTime, T.schedule_id AS schedule_id FROM TICKET T JOIN schedules S ON T.schedule_id = S.schedule_id WHERE T.id=?";
   const id = [req.params.id];
   connection.query(sql, id, (err, rows, fields) => {
     res.send(rows);

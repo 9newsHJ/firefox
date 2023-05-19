@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 
 function MyTicket({ user_id }) {
-  const [myTicket] = useFetch("http://localhost:5000/api/myTicket/" + user_id);
+  const [myTicket] = useFetch(
+    "http://localhost:5000/api/myTicketInfo/" + user_id
+  );
+
   return (
     <div className="myticket">
       <div className="myticket_box">
@@ -23,7 +26,7 @@ function MyTicket({ user_id }) {
                 <th>사용여부</th>
               </tr>
               {myTicket &&
-                myTicket.map((item) => {
+                myTicket.map(item => {
                   return (
                     <React.Fragment key={item.id}>
                       <tr className="myticket_table_td">
@@ -33,8 +36,23 @@ function MyTicket({ user_id }) {
                             파이어폭스 VS SSG (장소: {item.ticketground})
                           </Link>
                         </td>
-                        <td>2022-05-25 14:00</td>
-                        <td>완료</td>
+                        <td>
+                          {new Date(item.ticketdate).toLocaleDateString()}
+                          <br />
+                          {item.ticketTime}
+                        </td>
+                        <td
+                          style={{
+                            color:
+                              item.ticketdate > Date.now().toLocaleString()
+                                ? "red"
+                                : "rgb(255,192,0)",
+                          }}
+                        >
+                          {new Date(item.ticketdate) < Date.now()
+                            ? "완료"
+                            : "미사용"}
+                        </td>
                       </tr>
                     </React.Fragment>
                   );

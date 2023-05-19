@@ -4,7 +4,7 @@
   font-size: 50px;
   font-weight: bold;
   line-height: 70px;
-  border-bottom: 1px solid rgb(255, 192, 0);
+  border-bottom: 1px solid rgba(255, 191, 0, 0.671);
 }
 
 .team_img1,
@@ -15,33 +15,34 @@
 .team_img1 > div {
   display: inline-block;
   width: 300px;
-  height: 500px;
-  background-color: rgba(212, 160, 3, 1);
+  height: 350px;
+  background-color: rgb(223, 167, 0);
   box-shadow: 10px 10px 0px rgb(255, 255, 255);
   border-radius: 30px;
   margin-top: 90px;
   margin-right: 80px;
-  padding-top: 30px;
+  padding-top: 20px;
   padding-left: 50px;
 }
 
 .team_img1 > div > p,
 .team_img2 > div > p {
-  margin-top: 30px;
+  margin-top: 12px;
   text-align: center;
   margin-right: 50px;
+  font-weight: bold;
 }
 
 .team_img2 > div {
   display: inline-block;
   width: 300px;
-  height: 500px;
-  background-color: rgba(212, 160, 3, 0.753);
+  height: 350px;
+  background-color: rgba(187, 140, 0, 0.788);
   box-shadow: 10px 10px 0px rgb(255, 255, 255);
   border-radius: 30px;
   margin-top: 90px;
   margin-right: 80px;
-  padding-top: 30px;
+  padding-top: 20px;
   padding-left: 50px;
   margin-bottom: 300px;
 }

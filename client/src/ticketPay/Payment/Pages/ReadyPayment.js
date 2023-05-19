@@ -5,24 +5,19 @@ import "../../../css/payment.css";
 import { useSelector } from "react-redux";
 import { seat } from "../Seat";
 
-// import { response } from "express";
-// import { seat } from "../Seat";
-// import { setVal1 } from "../../../reducer/paypriceSlice";
-// import { useLocation } from "react-router-dom";
-// import { seat } from "../ticketPay/Payment/Seat";
-
 function Payment({ user_id }) {
-  const price = useSelector((state) => state.pay.price);
-  const val1 = useSelector((state) => state.pay.val1);
-  const val2 = useSelector((state) => state.pay.val2);
-  const val3 = useSelector((state) => state.pay.val3);
-  const number = useSelector((state) => state.pay.number);
-  const ground = useSelector((state) => state.pay.ground);
+  const price = useSelector(state => state.pay.price);
+  const val1 = useSelector(state => state.pay.val1);
+  const val2 = useSelector(state => state.pay.val2);
+  const val3 = useSelector(state => state.pay.val3);
+  const number = useSelector(state => state.pay.number);
+  const ground = useSelector(state => state.pay.ground);
 
-  const date = useSelector((state) => state.pay.schedule_date);
-  const place = useSelector((state) => state.pay.schedule_place);
-  const team = useSelector((state) => state.pay.schedule_team);
-  const time = useSelector((state) => state.pay.schedule_time);
+  const date = useSelector(state => state.pay.schedule_date);
+  const place = useSelector(state => state.pay.schedule_place);
+  const team = useSelector(state => state.pay.schedule_team);
+  const time = useSelector(state => state.pay.schedule_time);
+  const id = useSelector(state => state.pay.schedule_id);
 
   console.log(price);
   console.log(number);
@@ -36,8 +31,7 @@ function Payment({ user_id }) {
   // 티켓 이름 const
   const selectedCodNm = (val1, val2, val3) =>
     seat.find(
-      (el) =>
-        el.seatGrade === val1 && el.seatName === val2 && el.seatNum === val3
+      el => el.seatGrade === val1 && el.seatName === val2 && el.seatNum === val3
     )?.codNm;
   console.log("이거 되면 잔다 = ", selectedCodNm);
 
@@ -50,6 +44,7 @@ function Payment({ user_id }) {
     ticketdate: date,
     ticketTeam: team,
     ticketTime: time,
+    schedule_id: id,
   });
 
   function hadleSubmit() {
@@ -67,6 +62,7 @@ function Payment({ user_id }) {
       ticketdate: new Date(inputValues.ticketdate), // 경기 날짜
       ticketTeam: inputValues.ticketTeam, // 경기 팀
       ticketTime: inputValues.ticketTime, // 경기 시간
+      schedule_id: inputValues.schedule_id,
     };
     console.log("이거 실행됐냐");
     const config = {
@@ -78,11 +74,11 @@ function Payment({ user_id }) {
 
     axios
       .post(url, data, config) // POST 요청을 보낸다.
-      .then((response) => {
+      .then(response => {
         // 요청이 성공했을 때 실행되는 함수
         console.log(response.data); // 응답 데이터를 콘솔에 출력한다.
       })
-      .catch((error) => {
+      .catch(error => {
         // 요청이 실패했을 때 실행되는 함수
         console.log(error); // 에러를 콘솔에 출력한다.
       });
@@ -115,7 +111,7 @@ function Payment({ user_id }) {
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
       },
       params: params,
-    }).then((response) => {
+    }).then(response => {
       console.log("카카오는 보아라", response);
       // const {
       //   data: { next_redirect_pc_url, tid },

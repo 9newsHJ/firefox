@@ -8,7 +8,7 @@ function AdminBoard() {
     "http://localhost:5000/api/adminboardcommentlength"
   );
 
-  const deleteBoard = (num) => {
+  const deleteBoard = num => {
     if (window.confirm("삭제하시겠습니까?")) {
       const url = "/api/board/" + num;
       fetch(url, {
@@ -37,7 +37,7 @@ function AdminBoard() {
               <th>삭제</th>
             </tr>
             {board_content &&
-              board_content.map((item) => {
+              board_content.map(item => {
                 return (
                   <tr className="adminboard_table_tr" key={item.NUM}>
                     <td className="adminboard_table_td">{item.NUM}</td>
