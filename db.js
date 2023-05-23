@@ -16,7 +16,7 @@ async function executeQuery(query, params) {
   const connection = await pool.getConnection();
   try {
     const [rows, fields] = await connection.execute(query, params);
-    // console.log("rows and params", rows, params);
+    // console.log("rows and params", rows, params);1
     return rows;
   } finally {
     connection.release();
