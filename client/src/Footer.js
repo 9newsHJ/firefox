@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import { useEffect, useState } from "react";
 
 function Footer() {
+  const [count, setCount] = useState(0);
   const accessToken = () => {
     axios({
       url: "http://localhost:5000/accesstoken",
@@ -21,6 +22,10 @@ function Footer() {
       method: "GET",
       withCredentials: true,
     });
+  };
+
+  const countUp = () => {
+    setCount(count + 1);
   };
 
   return (
@@ -74,6 +79,9 @@ function Footer() {
         <button onClick={refreshToken} className="App-link">
           get Refresh Token
         </button>
+
+        <br />
+        <button onClick={countUp}> 카운트업 </button>
         <br />
       </div>
 

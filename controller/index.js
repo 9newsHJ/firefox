@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 // module 생성
 const login = (req, res, next) => {
-  //console.log("index.js userDatabase : ", userDatabase);
+  // console.log("index.js userDatabase : ", userDatabase);
   const { user_id } = req.body;
 
   const userInfo = userDatabase.filter((item) => {
@@ -28,6 +28,7 @@ const login = (req, res, next) => {
         process.env.REFRESH_SECRET,
         { expiresIn: "24h", issuer: "About Tech" }
       );
+
       // token 전송
       res.cookie("accessToken", accessToken, {
         secure: false,
